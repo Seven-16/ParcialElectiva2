@@ -1,0 +1,22 @@
+name: Despliegue a Surge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Surge
+      run: npm install --global surge
+
+    - name: Deploy to Surge.sh
+      env:
+        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+      run: surge --project ./src --domain aaron-p1.surge.sh 
